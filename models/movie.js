@@ -18,8 +18,8 @@ var MovieSchema = mongoose.Schema({
 	}
 });
 
-var Movie = mongoose.model('Movie', MovieSchema);
-
+//var Movie = mongoose.model('Movie', MovieSchema);
+var Movie = module.exports = mongoose.model('Movie', MovieSchema);
 
 
 
@@ -31,11 +31,19 @@ module.exports.createMovie = function(newMovie, callback) {
 	newMovie.save(callback)
 }
 
-module.exports.getMovieByTitle = function(title){
-	console.log(`title ${title}`);
-	Movie.find();	
+/*module.exports.getMovieByTitle = function(searchQuery){
+	console.log(`searchQuery ${searchQuery}`);
+	//Movie.find();	
+	Movie.findOne({title: searchQuery});
 	console.log(Movie.find());
+}*/
+
+module.exports.getMovieByTitle = function(title, callback){
+	var query = {title: title};
+	Movie.findOne(query, callback);
+	console.log(Movie);
 }
+
 
 //MovieSchema.getMovie.serialize
 

@@ -4,7 +4,7 @@ var router = express.Router();
 //var mongoose = require('mongoose');
 
 var Movie = require('../models/movie');
-console.log(Movie.findOne());
+
 
 router.post('/movie-add', (req, res) => {
 		let newMovie = new Movie({			
@@ -21,11 +21,12 @@ router.post('/movie-add', (req, res) => {
 	});
 
 router.get('/movie-search', (req, res) => {
-	//console.log('start router get');
+	console.log('start router get');
 	//Movie.findOne({title:"Black Panther"});	
-	//Movie.getMovieByTitle('Black Panther');
+	//Movie.getMovieByTitle('Black Panther 2');
 	//Movie.findOne('Black Panther');
-	console.log(Movie.year);
+
+	
 });
 
 
