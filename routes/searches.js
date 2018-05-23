@@ -5,6 +5,49 @@ var router = express.Router();
 
 var Movie = require('../models/movie');
 
+router.get('/all', (req, res) => {
+	console.log('geting all movies...');
+	Movie.find({})
+		.exec(function(err, books) {
+			if(err) {
+				res.send('error as occured');
+			}
+			else {
+				console.log(books);
+				res.json(books);
+			}
+		});
+});
+
+
+router.get('/byYear/:year', (req, res) => {
+	Movie.find({
+		year:req.params.year
+	})
+	.exec(function(err, movie) {
+		if(err) {
+			res.send('error finding movie by year');
+		}
+		else {
+			res.json(movie);
+		}
+	})
+});
+
+router.get('/byTitle/:title', (req, res) => {
+	Movie.findOne({
+		title:req.params.title
+	})
+	.exec(function(err, movie) {
+		if(err) {
+			res.send('error finding movie by title');
+		}
+		else {
+			res.json(movie);
+		}
+	})
+});
+
 
 router.post('/movie-add', (req, res) => {
 		let newMovie = new Movie({			
@@ -20,23 +63,13 @@ router.post('/movie-add', (req, res) => {
 					});
 	});
 
-router.get('/movie-search', (req, res) => {
-	console.log('start router get');
-	//Movie.findOne({title:"Black Panther"});	
-	//Movie.getMovieByTitle('Black Panther 2');
-	//Movie.findOne('Black Panther');
-
-	
-});
-
-
-function ensureAuthenticated(req, res, next){
+/*function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	} else {
 		//req.flash('error_msg','You are not logged in');
 		res.redirect('/users/login');
 	}
-}
+}*/
 
 module.exports = router;
