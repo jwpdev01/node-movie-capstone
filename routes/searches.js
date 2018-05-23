@@ -1,12 +1,42 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 //var mongo = require('mongo');
 //var mongoose = require('mongoose');
 
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false }));
+
 var Movie = require('../models/movie');
 
+router.put('/updates/', (req, res) => {
+	console.log('start update...');
+	console.log(`id: ${req.params.id}`)
+	console.log(`title: ${req.body.title}`)
+	Movie.findOneAndUpdate({
+		_id:req.params.id
+	}, {$set: {title:req.body.title}},
+		{upsert:true},
+		(err, newMovie) => {
+			if(err) {
+				console.log(err);
+			}
+			else {
+				res.send(newMovie);
+			}
+	});
+});
+
+
+router.delete('/delete/:id', (req, res) => {
+  console.log('start delete...')
+  Movie.delete(req.params.id);
+  console.log(`Deleted shopping list item \`${req.params.ID}\``);
+  res.status(204).end();
+});
+
 router.get('/all', (req, res) => {
-	console.log('geting all movies...');
+	console.log('getting all movies...');
 	Movie.find({})
 		.exec(function(err, books) {
 			if(err) {
@@ -19,8 +49,8 @@ router.get('/all', (req, res) => {
 		});
 });
 
-
 router.get('/byYear/:year', (req, res) => {
+	console.log('start get by year...')
 	Movie.find({
 		year:req.params.year
 	})
@@ -48,28 +78,41 @@ router.get('/byTitle/:title', (req, res) => {
 	})
 });
 
+router.post('/add', (req, res) => {
+	Movie.create(req.body, (err, movie) => {
+		if(err) {
+			res.send(err);
+		}
+		else {
+			res.send(movie);
+		}
+	})
+});
 
-router.post('/movie-add', (req, res) => {
-		let newMovie = new Movie({			
-			title: req.body.title,
-			year: req.body.year,
-			rating: req.body.rating,
-			description: req.body.description
-		});
-		
-		Movie.createMovie(newMovie, function (err, user) {
-						if (err) throw err;
-						console.log(Movie);
-					});
-	});
 
-/*function ensureAuthenticated(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	} else {
-		//req.flash('error_msg','You are not logged in');
-		res.redirect('/users/login');
-	}
-}*/
+
+/*
+
+router.post('/add', (req, res) => {
+	let newMovie = new Movie();
+
+	newMovie.title = req.body.title;
+	newMovie.year = req.body.year;
+	newMovie.rating = req.body.rating;
+	newMovie.description = req.body.description;
+
+	newMovie.save((err, movie) => {
+		if(err) {
+			res.send(err);
+		}
+		else {
+			res.send(movie);
+		}
+	})
+});
+
+*/
+
+
 
 module.exports = router;
