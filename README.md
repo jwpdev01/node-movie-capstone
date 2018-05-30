@@ -19,3 +19,4 @@ $ npm install
 ```sh
 $ npm start
 ```# loginapp
+# movie-node-capstone
