@@ -1,0 +1,34 @@
+<h3>Movies</h3>
+<form method="get" action="/movies/all">
+  <a href='/movies/all'>Search All</a><br/>
+</form>
+
+
+
+<form method="post" action="/movies/add">
+   <div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" placeholder="Title" name="title">
+  </div>
+  <div class="form-group">
+    <label>Year</label>
+    <input type="text" class="form-control" placeholder="Year" name="year">
+  </div>
+   <div class="form-group">
+    <label>Rating</label>
+    <input type="text" class="form-control" placeholder="Rating" name="rating">
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="text" class="form-control" placeholder="description" name="description">
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+Delete
+<form action='/movies/delete' method='post'>
+  <label>Id</label>
+  <input type='text' name='id'>
+  <button  type="submit" >Submit</button>
+</form>

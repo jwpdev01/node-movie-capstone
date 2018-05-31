@@ -1,0 +1,48 @@
+<h3>TEST</h3>
+  
+    {{#each movies_list}}
+    
+   <div class="row" >      
+  	  
+	  <div class="col-lg-3">{{title}}</div>
+	  <div class="col-lg-3">{{year}}</div>
+	  <div class="col-lg-3">{{rating}}</div>
+	  <div class="col-lg-3">	  	  
+
+	  <form action="/lists" method="post">
+	  	<span class='hide-value'>{{_id}}</span>
+		<button type="submit" class="btn-sm btn-warning">Edit</button>
+      </form>
+
+      <form action='/movies/delete' method='post'>
+      	  <input class='hide-value' type='text' name='id' value="{{_id}}">
+          <button class="btn-sm btn-danger" type="submit">Delete</button>
+      </form>
+
+	  </div>
+</div>
+	{{/each}}   
+  
+<br/>
+<hr/>
+<br/>
+  <form method="post" action="/movies/add">
+   <div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" placeholder="Title" name="title">
+  </div>
+  <div class="form-group">
+    <label>Year</label>
+    <input type="text" class="form-control" placeholder="Year" name="year">
+  </div>
+   <div class="form-group">
+    <label>Rating</label>
+    <input type="text" class="form-control" placeholder="Rating" name="rating">
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="text" class="form-control" placeholder="description" name="description">
+  </div>
+
+  <button type="submit" class="btn btn-warning">Submit</button>
+</form>

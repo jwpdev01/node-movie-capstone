@@ -10,15 +10,14 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var methodOverride = require('method-override');
 
 mongoose.connect('mongodb://localhost/moviedb');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var searches = require('./routes/searches');
-
-
+var movies = require('./routes/movies');
 
 // Init App
 var app = express();
@@ -32,6 +31,9 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//method override
+app.use(methodOverride('_method'));
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -79,7 +81,7 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/searches', searches);
+app.use('/movies', movies);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

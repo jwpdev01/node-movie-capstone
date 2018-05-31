@@ -85,3 +85,28 @@ body {
 footer{
   margin-top:40px;
 }
+
+body {
+    background: url('https://getreelcinemas.com//wp-content/uploads/2015/02/Background-Narrow.jpg') no-repeat fixed center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: white;
+}
+
+.hide-value {
+  display: none;
+}
+
+.black {
+  color: black;
+}
