@@ -47,19 +47,35 @@ router.post('/search/', ensureAuthenticated, function(req, res){
 
 // Add Movie
 router.post('/add', function (req, res) {
-
-if (req.body._id1 == "") {
-	console.log('new movie')	
-	let title = req.body.title;
-	let year = req.body.year;
-	let rating = req.body.rating;
-	let description = req.body.description;
+console.log(req.body);
+if (req.body.id1 !== "") {
+	console.log(`update movie`);
+	Movie.findOneAndUpdate({
+		_id:req.body.id1
+		}, {$set:req.body},
+			//{upsert:true},
+			{upsert: true, new:true},
+		(err, newMovie) => {
+			if(err) {
+				console.log(err);
+			}
+			else {
+				res.redirect('/');
+			}
+		});
+}
+else  {
+	console.log('new movie')	 
+	let title = req.body.title1;
+	let year = req.body.year1;
+	let rating = req.body.rating1;
+	//let description = req.body.description;
 
 	// Validation
 	req.checkBody('title', 'Title is required').notEmpty();
 	req.checkBody('year', 'Year is required').notEmpty();
 	req.checkBody('rating', 'Rating is required').notEmpty();
-	req.checkBody('description', 'Description is required').notEmpty();
+	//req.checkBody('description', 'Description is required').notEmpty();
 	
 	var errors = req.validationErrors();
 
@@ -68,26 +84,6 @@ if (req.body._id1 == "") {
 	//res.render('results');
 	res.redirect('/');
 	}
-else {
-	console.log(`id1 value is ${req.body._id1}`);
-	Movie.findOneAndUpdate({
-		_id:req.body._id1
-		}, {$set: {title:req.body.title}},
-			{upsert:true},
-		(err, newMovie) => {
-			if(err) {
-				console.log(err);
-			}
-			else {
-				//res.send(newMovie);
-				//res.redirect('movies/');
-				//res.render('movies');
-				res.redirect('/');
-			}
-		});
-		//res.redirect('/');
-	}
-	//res.redirect('/');
 });
 
 //router.delete('/delete/:id', jsonParser, (req, res) => {
