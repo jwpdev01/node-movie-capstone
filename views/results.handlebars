@@ -1,48 +1,50 @@
-<h3>TEST</h3>
+<h3>Movie Results</h3>
   
     {{#each movies_list}}
     
    <div class="row" >      
-  	  
-	  <div class="col-lg-3">{{title}}</div>
-	  <div class="col-lg-3">{{year}}</div>
-	  <div class="col-lg-3">{{rating}}</div>
-	  <div class="col-lg-3">	  	  
+      
+    <div class="col-lg-4">{{title}}</div>
+    <div class="col-lg-2">{{year}}</div>
+    <div class="col-lg-2">{{rating}}</div>
+    <div class="col-lg-2">        
 
-	  <form action="/lists" method="post">
-	  	<span class='hide-value'>{{_id}}</span>
-		<button type="submit" class="btn-sm btn-warning">Edit</button>
+    <form action="/movies/search" method="post">
+      <input class='hide-value' type='text' name='id' value="{{_id}}">
+    <button type="submit" class="btn-sm btn-warning">Edit</button>
       </form>
-
+      </div>
+      <div class="col-lg-2">
       <form action='/movies/delete' method='post'>
-      	  <input class='hide-value' type='text' name='id' value="{{_id}}">
+          <input class='hide-value' type='text' name='id' value="{{_id}}">
           <button class="btn-sm btn-danger" type="submit">Delete</button>
       </form>
 
-	  </div>
+    </div>
 </div>
-	{{/each}}   
+  {{/each}}   
   
 <br/>
 <hr/>
 <br/>
-  <form method="post" action="/movies/add">
-   <div class="form-group">
+
+<form method="post" action="/movies/add">
+<div class="form-group">
+    <input type='text' name='id1' value="{{{_id1}}}" class='black'>
+  </div>
+  <div class="form-group">
     <label>Title</label>
-    <input type="text" class="form-control" placeholder="Title" name="title">
+    <input type="text" class="form-control" placeholder="Title" name="title" value = "{{{title1}}}" class='black'>
   </div>
   <div class="form-group">
     <label>Year</label>
-    <input type="text" class="form-control" placeholder="Year" name="year">
+    <input type="text" class="form-control" placeholder="Year" name="year" value = "{{{year1}}}" class='black'>
   </div>
    <div class="form-group">
     <label>Rating</label>
-    <input type="text" class="form-control" placeholder="Rating" name="rating">
-  </div>
-  <div class="form-group">
-    <label>Password</label>
-    <input type="text" class="form-control" placeholder="description" name="description">
+    <input type="text" class="form-control" placeholder="Rating" name="rating" value = "{{{rating1}}}" class='black'>
   </div>
 
   <button type="submit" class="btn btn-warning">Submit</button>
 </form>
+
