@@ -12,7 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var methodOverride = require('method-override');
 
-mongoose.connect('mongodb://localhost/moviedb');
+mongoose.connect('mongodb://user1:password1@ds247170.mlab.com:47170/node-movie-db');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
