@@ -27,8 +27,7 @@ router.get('/all', ensureAuthenticated, (req, res) => {
 router.post('/search/', ensureAuthenticated, function(req, res){
 	 console.log('search one');
 	let id = req.body.id;
-	console.log(`search one.  id value is ${id}`)
-	console.log(id);
+
 	Movie.findById({ _id : id }, 
 		function (err, movie) {
 			if(err) {
@@ -48,6 +47,24 @@ router.post('/search/', ensureAuthenticated, function(req, res){
 // Add Movie
 router.post('/add', ensureAuthenticated, function (req, res) {
 console.log(req.body);
+
+var title1 = req.body.title1;
+var year1 = req.body.email1;
+var rating1 = req.body.rating1;
+
+// Validation
+req.checkBody('title1', 'Movie Title is required').notEmpty();
+req.checkBody('year1', 'Year is required').notEmpty();
+req.checkBody('rating1', 'Rating is required').notEmpty();
+
+var errors = req.validationErrors();
+
+if (errors) {
+	res.render('register', {
+		errors: errors
+	});
+
+
 if (req.body.id1 !== "") {
 	console.log(`update movie`);
 	Movie.findOneAndUpdate({
@@ -66,7 +83,7 @@ if (req.body.id1 !== "") {
 }
 else  {
 	console.log('new movie')	 
-	let title = req.body.title1;
+	/*let title = req.body.title1;
 	let year = req.body.year1;
 	let rating = req.body.rating1;
 	//let description = req.body.description;
@@ -77,7 +94,7 @@ else  {
 	req.checkBody('rating', 'Rating is required').notEmpty();
 	//req.checkBody('description', 'Description is required').notEmpty();
 	
-	var errors = req.validationErrors();
+	var errors = req.validationErrors();*/
 
 	const newMovie = new Movie(req.body);
 	newMovie.save();
