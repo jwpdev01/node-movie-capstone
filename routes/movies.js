@@ -4,11 +4,11 @@ var router = express.Router();
 var Movie = require('../models/movie');
 
 // Get Homepage
-router.get('/', function(req, res){
+router.get('/', ensureAuthenticated, function(req, res){
 	res.render('movies');
 });
 
-router.get('/all', (req, res) => {
+router.get('/all', ensureAuthenticated, (req, res) => {
 	console.log('getting all movies...');
 	Movie.find({})
 		.exec(function(err, movies) {
@@ -46,7 +46,7 @@ router.post('/search/', ensureAuthenticated, function(req, res){
 });
 
 // Add Movie
-router.post('/add', function (req, res) {
+router.post('/add', ensureAuthenticated, function (req, res) {
 console.log(req.body);
 if (req.body.id1 !== "") {
 	console.log(`update movie`);
@@ -86,8 +86,7 @@ else  {
 	}
 });
 
-//router.delete('/delete/:id', jsonParser, (req, res) => {
-router.post('/delete/', (req, res) => {
+router.post('/delete/', ensureAuthenticated, (req, res) => {
 
  console.log(req.body.id);
  let id = req.body.id;
@@ -96,7 +95,6 @@ router.post('/delete/', (req, res) => {
  	if (err)
  		res.send(err);
  	else
- 		//res.send('Successfully! Movie has been Deleted.'); 
  		res.redirect('/');
  	}); 
 })
@@ -110,19 +108,6 @@ function ensureAuthenticated(req, res, next){
 	}
 }
 
-router.get('/all', (req, res) => {
-	console.log('getting all movies...');
-	Movie.find({})
-		.exec(function(err, movies) {
-			if(err) {
-				res.send('error as occured');
-			}
-			else {
-				//console.log(books);
-				res.json(movies);
-				//res.render('index')
-			}
-		});
-});
+
 
 module.exports = router;
